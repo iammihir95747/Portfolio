@@ -13,9 +13,6 @@ import {
 import { SiTailwindcss, SiMongodb } from "react-icons/si";
 import { motion } from "framer-motion";
 
-// Google Fonts via CDN (add to index.html for real use)
-// For demo, we use Tailwind's font utilities
-
 const projects = [
   {
     title: "Portfolio Website",
@@ -23,35 +20,19 @@ const projects = [
       "A modern, responsive portfolio built with React and Tailwind CSS. Features smooth animations and dark mode.",
     image:
       "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=600&q=80",
-    github: "https://github.com/yourusername/portfolio",
+    github: "https://mihirrathodprofile.vercel.app/",
     demo: "#",
+    video: null,
   },
   {
-    title: "Task Manager App",
+    title: "Coming Soon",
     description:
-      "A full-stack task manager with authentication, built using MERN stack. Real-time updates and drag-and-drop UI.",
-    image:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80",
-    github: "https://github.com/yourusername/task-manager",
-    demo: "#",
-  },
-  {
-    title: "Weather Dashboard",
-    description:
-      "A weather dashboard app using React and OpenWeatherMap API. Features location search and animated weather icons.",
+      "Currently working on it.",
     image:
       "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
-    github: "https://github.com/yourusername/weather-dashboard",
+    github: "#",
     demo: "#",
-  },
-  {
-    title: "Blog Platform",
-    description:
-      "A minimal blog platform with markdown support, built with Node.js and MongoDB. Clean UI and easy publishing.",
-    image:
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80",
-    github: "https://github.com/yourusername/blog-platform",
-    demo: "#",
+    video: null,
   },
 ];
 
@@ -84,21 +65,14 @@ const socialLinks = [
   },
 ];
 
-// Remove all background color classes from gradientBg
-const gradientBg = "";
-
-// Import the video from the assets folder
 import bgVideo from "./assets/bg.mp4";
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [formStatus, setFormStatus] = useState(null);
-
-  // For skills hover image
   const [hoveredSkill, setHoveredSkill] = useState(null);
 
-  // For demo, form submission is simulated
   const handleFormChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -111,17 +85,10 @@ function App() {
     }, 1200);
   };
 
-  // Default image for skills section
   const defaultSkillImage = "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80";
 
-  // --- Fix for background video not showing ---
-  // 1. Import local video asset from assets folder
-  // 2. Add fallback to a public video URL if bg.mp4 is missing
-  // 3. Add error handling to show a fallback image if video fails to load
-
-  // Use imported video from assets folder
   const videoSrc = bgVideo;
-  const fallbackVideoSrc = "https://www.w3schools.com/howto/rain.mp4"; // Example fallback video
+  const fallbackVideoSrc = "https://www.w3schools.com/howto/rain.mp4";
   const fallbackImageSrc = "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80";
 
   const videoRef = useRef(null);
@@ -131,7 +98,7 @@ function App() {
   useEffect(() => {
     setVideoError(false);
     setUseFallbackVideo(false);
-  }, [darkMode]); // Reset error on theme change
+  }, [darkMode]);
 
   const handleVideoError = () => {
     if (!useFallbackVideo) {
@@ -143,52 +110,12 @@ function App() {
 
   return (
     <div
-      className={`font-sans ${
-        darkMode ? "dark" : ""
-      } min-h-screen transition-colors duration-500`}
+      className={`font-sans ${darkMode ? "dark" : ""} min-h-screen transition-colors duration-500`}
       style={{ background: "none" }}
     >
-      {/* Background Video */}
-      <div className="fixed inset-0 -z-20 w-full h-full overflow-hidden">
-        {!videoError ? (
-          <video
-            ref={videoRef}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-            style={{
-              opacity: 1, // Set opacity to full
-              transition: "opacity 0.5s",
-              filter: "blur(9px)",
-            }}
-            onError={handleVideoError}
-          >
-            <source src={useFallbackVideo ? fallbackVideoSrc : videoSrc} type="video/mp4" />
-            {/* Fallback text */}
-            Your browser does not support the video tag.
-          </video>
-        ) : (
-          <img
-            src={fallbackImageSrc}
-            alt="Background"
-            className="w-full h-full object-cover"
-            style={{
-              opacity: darkMode ? 0.7 : 0.5,
-              transition: "opacity 0.5s",
-            }}
-          />
-        )}
-        {/* Optional: animated gradient overlay */}
-        {/* Remove gradientBg class */}
-        {/* Remove overlay if you want only video, or keep if you want subtle effect */}
-        {/* <div className={`absolute inset-0 animate-gradient pointer-events-none`} style={{ opacity: 0.5 }}></div> */}
-      </div>
-
       {/* Theme Toggle */}
       <button
-        className="fixed top-5 right-5 z-50 rounded-full p-2 shadow-lg transition hover:scale-110"
+        className="fixed top-5 right-5 z-50 rounded-full p-2 bg-black/70 text-white hover:bg-white hover:text-black transition"
         aria-label="Toggle dark mode"
         onClick={() => setDarkMode((d) => !d)}
       >
@@ -202,31 +129,59 @@ function App() {
         {/* Hero Section */}
         <section
           id="hero"
-          className="flex flex-col items-center justify-center min-h-screen text-center px-4"
-          style={{ background: "none" }}
+          className="w-full min-h-screen flex flex-col items-center justify-center text-center px-4 relative"
         >
+          {/* Background Video ONLY for Hero */}
+          <div className="absolute inset-0 -z-20 w-full h-full overflow-hidden">
+            {!videoError ? (
+              <video
+                ref={videoRef}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+                style={{
+                  opacity: 1,
+                  transition: "opacity 0.5s",
+                }}
+                onError={handleVideoError}
+              >
+                <source src={useFallbackVideo ? fallbackVideoSrc : videoSrc} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <img
+                src={fallbackImageSrc}
+                alt="Background"
+                className="w-full h-full object-cover"
+                style={{
+                  opacity: darkMode ? 0.7 : 0.5,
+                  transition: "opacity 0.5s",
+                }}
+              />
+            )}
+          </div>
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="flex flex-col items-center gap-6">
+            <div className="flex flex-col items-center gap-6 w-full max-w-3xl mx-auto  text-white py-12 px-6 rounded-none relative z-10">
               <img
                 src="https://avatars.githubusercontent.com/u/9919?s=200&v=4"
                 alt="Profile"
-                className="w-32 h-32 rounded-full border-4 border-indigo-500 shadow-lg object-cover mb-4"
+                className="w-32 h-32 rounded-full border-4 border-white object-cover mb-4"
               />
-              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white dark:text-white font-poppins">
-                Hi, I'm <span className="text-indigo-400">Your Name</span>
+              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight font-poppins">
+                Hi, I'm <span className="text-black bg-white px-2 rounded">Mihir Rathod</span>
               </h1>
-              <h2 className="text-xl md:text-2xl font-semibold text-gray-200 dark:text-gray-300 tracking-wide mb-4">
+              <h2 className="text-xl md:text-2xl font-semibold text-gray-200 tracking-wide mb-4">
                 Web Developer &amp; Creative Coder
               </h2>
               <a
                 href="#projects"
-                className="inline-block px-8 py-3 text-white rounded-full font-semibold shadow-lg hover:bg-indigo-700 transition"
-                // removed bg-indigo-600
-                style={{ background: "none" }}
+                className="inline-block px-8 py-3 text-black bg-white rounded font-semibold hover:bg-gray-200 transition"
               >
                 View My Work
               </a>
@@ -238,7 +193,7 @@ function App() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={s.label}
-                    className="text-2xl text-gray-300 hover:text-indigo-400 transition"
+                    className="text-2xl text-white hover:text-black hover:bg-white rounded-full p-2 transition"
                   >
                     {s.icon}
                   </a>
@@ -248,157 +203,97 @@ function App() {
           </motion.div>
         </section>
 
-        {/* About Me Section */}
+        {/* About Section */}
         <section
           id="about"
-          className="max-w-3xl mx-auto py-20 px-4 flex flex-col items-center"
+          className="w-screen py-20 px-0 flex flex-col items-center"
+          style={{ position: "relative", left: "50%", right: "50%", marginLeft: "-50vw", marginRight: "-50vw" }}
         >
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="w-full"
+            className="w-full bg-white text-black py-12 px-6 rounded-none flex flex-col items-center"
           >
-            <h3 className="text-3xl font-bold mb-6 text-indigo-300 font-poppins">
-              About Me
-            </h3>
-            <p className="text-lg text-gray-200 dark:text-gray-300 mb-6 leading-relaxed">
-              I'm a passionate web developer with a love for building beautiful, functional, and accessible web experiences. My journey started with curiosity and a knack for problem-solving, and now I thrive on turning ideas into reality with code. I enjoy collaborating, learning new technologies, and bringing creativity into every project. When I'm not coding, you might find me sketching, exploring new music, or hiking. My goal is to contribute to impactful projects and grow as a developer every day.
-            </p>
-            {/* Fun icons/timeline */}
-            <div className="flex flex-wrap gap-6 justify-center mt-4">
-              <div className="flex flex-col items-center">
-                <FaReact className="text-3xl text-cyan-400 mb-1" />
-                <span className="text-xs text-gray-400">React Lover</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <FaFigma className="text-3xl text-pink-400 mb-1" />
-                <span className="text-xs text-gray-400">Design Enthusiast</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <FaNodeJs className="text-3xl text-green-500 mb-1" />
-                <span className="text-xs text-gray-400">Backend Curious</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <FaJs className="text-3xl text-yellow-400 mb-1" />
-                <span className="text-xs text-gray-400">JS Fan</span>
+            <div className="w-full max-w-3xl mx-auto">
+              <h3 className="text-3xl font-bold mb-6 font-poppins text-black">
+                About Me
+              </h3>
+              <p className="text-lg mb-6 leading-relaxed">
+                I'm a passionate web developer with a love for building beautiful, functional, and accessible web experiences. My journey started with curiosity and a knack for problem-solving, and now I thrive on turning ideas into reality with code. I enjoy collaborating, learning new technologies, and bringing creativity into every project. When I'm not coding, you might find me sketching, exploring new music, or hiking. My goal is to contribute to impactful projects and grow as a developer every day.
+              </p>
+              <div className="flex flex-wrap gap-6 justify-center mt-4">
+                <div className="flex flex-col items-center">
+                  <FaReact className="text-3xl text-cyan-400 mb-1" />
+                  <span className="text-xs text-gray-600">React Lover</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <FaFigma className="text-3xl text-pink-400 mb-1" />
+                  <span className="text-xs text-gray-600">Design Enthusiast</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <FaNodeJs className="text-3xl text-green-500 mb-1" />
+                  <span className="text-xs text-gray-600">Backend Curious</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <FaJs className="text-3xl text-yellow-400 mb-1" />
+                  <span className="text-xs text-gray-600">JS Fan</span>
+                </div>
               </div>
             </div>
           </motion.div>
         </section>
 
-        {/* Skills Section */}
-        <section
-          id="skills"
-          className="max-w-4xl mx-auto py-20 px-4"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <h3 className="text-3xl font-bold mb-8 text-indigo-300 font-poppins text-center">
-              Skills
-            </h3>
-            <div className="flex flex-col md:flex-row gap-8 items-center">
-              {/* Skill image preview */}
-              <div className="mb-6 md:mb-0 md:mr-8 flex-shrink-0">
-                <img
-                  src={
-                    hoveredSkill
-                      ? hoveredSkill.image
-                      : defaultSkillImage
-                  }
-                  alt={hoveredSkill ? hoveredSkill.name : "Skill Preview"}
-                  className="w-48 h-48 object-cover rounded-xl shadow-lg border-4 border-indigo-400 transition-all duration-300"
-                  style={{
-                    opacity: hoveredSkill ? 1 : 0.7,
-                  }}
-                />
-              </div>
-              {/* Skills grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 flex-1">
-                {skills.map((skill) => (
-                  <div
-                    key={skill.name}
-                    className="flex flex-col items-center group cursor-pointer"
-                    onMouseEnter={() => setHoveredSkill(skill)}
-                    onMouseLeave={() => setHoveredSkill(null)}
-                    onFocus={() => setHoveredSkill(skill)}
-                    onBlur={() => setHoveredSkill(null)}
-                    tabIndex={0}
-                  >
-                    <div className="text-4xl mb-2 group-hover:scale-110 transition">
-                      {skill.icon}
-                    </div>
-                    <span className="text-gray-200 dark:text-gray-300 font-medium">
-                      {skill.name}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            {/* Skill bars */}
-            <div className="mt-10 space-y-4">
-              {[
-                { name: "HTML5", level: 95 },
-                { name: "CSS3", level: 90 },
-                { name: "JavaScript", level: 90 },
-                { name: "React", level: 85 },
-                { name: "Node.js", level: 75 },
-                { name: "Tailwind", level: 80 },
-              ].map((s) => (
-                <div key={s.name}>
-                  <div className="flex justify-between text-sm text-gray-400 mb-1">
-                    <span>{s.name}</span>
-                    <span>{s.level}%</span>
-                  </div>
-                  <div className="w-full rounded-full h-2">
-                    <div
-                      className="h-2 rounded-full transition-all"
-                      style={{ width: `${s.level}%`, backgroundColor: "#6366f1" /* indigo-500 */ }}
-                    ></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </section>
+  
 
         {/* Projects Section */}
         <section
           id="projects"
-          className="max-w-5xl mx-auto py-20 px-4"
-          style={{ background: "none" }}
+          className="w-full py-20 px-0"
         >
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
+            className="w-full max-w-5xl mx-auto bg-white text-black py-12 px-6 rounded-none"
           >
-            <h3 className="text-3xl font-bold mb-8 text-indigo-300 font-poppins text-center">
+            <h3 className="text-3xl font-bold mb-8 font-poppins text-black text-center">
               Projects
             </h3>
             <div className="grid md:grid-cols-2 gap-8">
               {projects.map((project) => (
                 <motion.div
                   key={project.title}
-                  whileHover={{ scale: 1.03, boxShadow: "0 8px 32px #0003" }}
-                  className="rounded-xl shadow-lg overflow-hidden flex flex-col"
+                  whileHover={{ scale: 1.03 }}
+                  className="rounded-none border border-black/10 overflow-hidden flex flex-col bg-black/90 text-white"
                 >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="h-48 w-full object-cover"
-                  />
+                  {/* If project has a video, show video instead of image */}
+                  {project.video ? (
+                    <video
+                      src={project.video}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="h-48 w-full object-cover"
+                      style={{ background: "#222" }}
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="h-48 w-full object-cover"
+                    />
+                  )}
                   <div className="p-6 flex flex-col flex-1">
-                    <h4 className="text-xl font-bold text-indigo-200 mb-2">
+                    <h4 className="text-xl font-bold text-white mb-2">
                       {project.title}
                     </h4>
-                    <p className="text-gray-300 mb-4 flex-1">
+                    <p className="text-gray-200 mb-4 flex-1">
                       {project.description}
                     </p>
                     <div className="flex gap-4 mt-auto">
@@ -406,8 +301,7 @@ function App() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block px-4 py-2 text-white rounded hover:bg-indigo-600 transition text-sm"
-                        style={{ background: "none" }}
+                        className="inline-block px-4 py-2 text-black bg-white rounded hover:bg-gray-200 transition text-sm"
                       >
                         GitHub
                       </a>
@@ -415,8 +309,7 @@ function App() {
                         href={project.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block px-4 py-2 text-white rounded hover:bg-indigo-700 transition text-sm"
-                        style={{ background: "none" }}
+                        className="inline-block px-4 py-2 text-black bg-white rounded hover:bg-gray-200 transition text-sm"
                       >
                         Live Demo
                       </a>
@@ -431,65 +324,123 @@ function App() {
         {/* Contact Section */}
         <section
           id="contact"
-          className="max-w-2xl mx-auto py-20 px-4"
+          className="w-full py-10 px-2 sm:px-4"
         >
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            variants={{
+              hidden: { opacity: 0, y: 40 },
+              visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.1, duration: 0.5, ease: "easeOut" } }
+            }}
+            className="w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto bg-black/95 text-white py-8 px-3 sm:px-6 rounded-xl shadow-xl flex flex-col items-center"
           >
-            <h3 className="text-3xl font-bold mb-8 text-indigo-300 font-poppins text-center">
-              Contact
-            </h3>
-            <form
-              className="rounded-xl p-8 shadow-lg flex flex-col gap-4"
-              onSubmit={handleFormSubmit}
-              style={{ background: "none" }}
+            <motion.h3
+              className="text-2xl sm:text-3xl font-extrabold mb-1 font-poppins text-center tracking-tight"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
             >
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                className="text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                style={{ background: "none" }}
-                value={form.name}
-                onChange={handleFormChange}
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                className="text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                style={{ background: "none" }}
-                value={form.email}
-                onChange={handleFormChange}
-                required
-              />
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                rows={4}
-                className="text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                style={{ background: "none" }}
-                value={form.message}
-                onChange={handleFormChange}
-                required
-              />
-              <button
-                type="submit"
-                className="text-white rounded px-6 py-2 font-semibold hover:bg-indigo-700 transition"
-                style={{ background: "none" }}
-                disabled={formStatus === "Sending..."}
+              <span className="bg-gradient-to-r from-white/80 via-white to-white/60 bg-clip-text text-transparent">
+                Let's Connect
+              </span>
+            </motion.h3>
+            <motion.p
+              className="text-gray-400 mb-6 text-center max-w-xs text-sm font-light"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.5 }}
+            >
+              Have a project in mind or just want to say hi? Drop me a message below.
+            </motion.p>
+            <form
+              className="w-full flex flex-col gap-4"
+              onSubmit={handleFormSubmit}
+              autoComplete="off"
+            >
+              <motion.div
+                className="relative"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.18, duration: 0.4, type: "spring" }}
               >
-                {formStatus === "Sending..." ? "Sending..." : "Send Message"}
-              </button>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  className="w-full bg-black/80 border border-white/10 rounded-md text-white placeholder-gray-400 py-2 px-3 focus:outline-none focus:border-cyan-400 transition-all font-poppins text-base shadow"
+                  value={form.name}
+                  onChange={handleFormChange}
+                  required
+                />
+              </motion.div>
+              <motion.div
+                className="relative"
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.22, duration: 0.4, type: "spring" }}
+              >
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  className="w-full bg-black/80 border border-white/10 rounded-md text-white placeholder-gray-400 py-2 px-3 focus:outline-none focus:border-cyan-400 transition-all font-poppins text-base shadow"
+                  value={form.email}
+                  onChange={handleFormChange}
+                  required
+                />
+              </motion.div>
+              <motion.div
+                className="relative"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.26, duration: 0.4, type: "spring" }}
+              >
+                <textarea
+                  name="message"
+                  placeholder="Message"
+                  rows={2}
+                  className="w-full bg-black/80 border border-white/10 rounded-md text-white placeholder-gray-400 py-2 px-3 focus:outline-none focus:border-cyan-400 transition-all font-poppins text-base resize-none shadow"
+                  value={form.message}
+                  onChange={handleFormChange}
+                  required
+                />
+              </motion.div>
+              <motion.button
+                type="submit"
+                className="mt-1 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 text-white font-bold py-2 rounded-full shadow hover:from-purple-500 hover:to-cyan-400 hover:scale-105 transition-all duration-200 text-base tracking-wide disabled:opacity-60 border-0 outline-none focus:ring-2 focus:ring-cyan-400"
+                disabled={formStatus === "Sending..."}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3, duration: 0.4, type: "spring" }}
+              >
+                {formStatus === "Sending..." ? (
+                  <span className="animate-pulse">Sending...</span>
+                ) : (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 2L11 13" /><path d="M22 2L15 22L11 13L2 9L22 2Z" /></svg>
+                    Send
+                  </span>
+                )}
+              </motion.button>
               {formStatus && (
-                <div className="text-green-400 text-sm mt-2">{formStatus}</div>
+                <motion.div
+                  className="text-green-400 text-center text-xs mt-1 font-poppins"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {formStatus}
+                </motion.div>
               )}
             </form>
-            <div className="flex justify-center gap-6 mt-8">
+            <motion.div
+              className="flex justify-center gap-4 mt-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35, duration: 0.5 }}
+            >
               {socialLinks.map((s) => (
                 <a
                   key={s.label}
@@ -497,33 +448,23 @@ function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="text-3xl text-gray-300 hover:text-indigo-400 transition"
+                  className="text-xl text-white/80 hover:text-cyan-400 hover:bg-white/10 rounded-full p-2 transition-all duration-200 border border-white/10 hover:scale-110"
+                  style={{ boxShadow: "0 2px 8px 0 rgba(0,255,255,0.08)" }}
                 >
                   {s.icon}
                 </a>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="text-center py-6 text-gray-400 text-sm">
+      <footer className="text-center py-6 text-white bg-black w-full text-sm">
         &copy; {new Date().getFullYear()} Your Name. All rights reserved.
       </footer>
 
-      {/* Subtle animated gradient overlay */}
       <style>{`
-        .animate-gradient {
-          background: linear-gradient(120deg, #1e293b 0%, #6366f1 100%);
-          background-size: 200% 200%;
-          animation: gradientMove 8s ease-in-out infinite;
-        }
-        @keyframes gradientMove {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
         .font-poppins {
           font-family: 'Poppins', 'Inter', 'Space Grotesk', sans-serif;
         }
