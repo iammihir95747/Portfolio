@@ -13,6 +13,7 @@ import {
 import { SiTailwindcss, SiMongodb } from "react-icons/si";
 import { motion } from "framer-motion";
 import Navbar from "./Navbar.jsx";
+import Start from "./Start.jsx"; // Import Start.jsx
 
 const projects = [
   {
@@ -74,6 +75,17 @@ function Master() {
   const [formStatus, setFormStatus] = useState(null);
   const [hoveredSkill, setHoveredSkill] = useState(null);
 
+  // Loading state for Start.jsx
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading, or you can use actual async logic here
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1800); // 1.8s splash, adjust as needed
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleFormChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -108,6 +120,11 @@ function Master() {
       setVideoError(true);
     }
   };
+
+  // Show Start.jsx splash until loading is done
+  if (loading) {
+    return <Start />;
+  }
 
   return (
     <div
