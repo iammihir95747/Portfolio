@@ -1,482 +1,388 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-  FaGithub,
-  FaLinkedin,
-  FaEnvelope,
-  FaHtml5,
-  FaCss3Alt,
-  FaJs,
-  FaReact,
-  FaNodeJs,
-  FaFigma,
-} from "react-icons/fa";
-import { SiTailwindcss, SiMongodb } from "react-icons/si";
-import { motion } from "framer-motion";
-import Navbar from "./Navbar.jsx";
-import Start from "./Start.jsx"; // Import Start.jsx
+import React from 'react';
+import Img from "../assets/mypic.png"
 
-const projects = [
-  {
-    title: "Portfolio Website",
-    description:
-      "A modern, responsive portfolio built with React and Tailwind CSS. Features smooth animations and dark mode.",
-    image:
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=600&q=80",
-    github: "https://mihirrathodprofile.vercel.app/",
-    demo: "#",
-    video: null,
-  },
-  {
-    title: "TodoAPP",
-    description:
-      "Currently working on it.",
-    image:
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
-    github: "#",
-    demo: "#",
-    video: null,
-  },
-];
+const ACCENT1 = "text-blue-600";
+const ACCENT2 = "text-gray-900";
+const ACCENT_BG = "bg-blue-50";
+const ACCENT_BTN = "bg-blue-600 hover:bg-blue-700 text-white";
+const ACCENT_BORDER = "border-blue-600";
+const ACCENT_LINE = "bg-blue-600";
+
+const profileImg = Img;
+
+const skillIcons = {
+  MongoDB: (
+    <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="#4A8A08" d="M12 2l1.5 6.5L12 22l-1.5-13.5L12 2z"/><path fill="#222" d="M12 2v20"/></svg>
+  ),
+  "Express.js": (
+    <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="4" rx="2" fill="#222"/></svg>
+  ),
+  "React.js": (
+    <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4" stroke="#1976d2" strokeWidth="2"/><ellipse cx="12" cy="12" rx="4" ry="10" stroke="#1976d2" strokeWidth="2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="4" ry="10" stroke="#1976d2" strokeWidth="2" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="2" fill="#1976d2"/></svg>
+  ),
+  "Node.js": (
+    <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><polygon points="12,2 22,7 22,17 12,22 2,17 2,7" fill="#222"/><text x="12" y="16" textAnchor="middle" fontSize="7" fill="#4A8A08" fontWeight="bold">JS</text></svg>
+  ),
+  Git: (
+    <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="7" cy="17" r="2" fill="#222"/><circle cx="17" cy="7" r="2" fill="#222"/><path stroke="#222" strokeWidth="2" d="M7 17L17 7"/></svg>
+  ),
+  "Tailwind CSS": (
+    <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M3 15c2-4 6-4 8 0s6 4 8 0" stroke="#1976d2" strokeWidth="2" fill="none"/></svg>
+  ),
+  "REST API": (
+    <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="8" rx="2" stroke="#222" strokeWidth="2"/><circle cx="8" cy="12" r="1" fill="#1976d2"/><circle cx="16" cy="12" r="1" fill="#1976d2"/></svg>
+  ),
+  JWT: (
+    <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" stroke="#1976d2" strokeWidth="2"/><path d="M6 12h12" stroke="#1976d2" strokeWidth="2"/><path d="M12 6v12" stroke="#1976d2" strokeWidth="2"/></svg>
+  ),
+};
 
 const skills = [
-  { name: "HTML5", icon: <FaHtml5 className="text-orange-500" />, image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80" },
-  { name: "CSS3", icon: <FaCss3Alt className="text-blue-500" />, image: "https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=400&q=80" },
-  { name: "JavaScript", icon: <FaJs className="text-yellow-400" />, image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" },
-  { name: "React", icon: <FaReact className="text-cyan-400" />, image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80" },
-  { name: "Node.js", icon: <FaNodeJs className="text-green-500" />, image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" },
-  { name: "Tailwind", icon: <SiTailwindcss className="text-sky-400" />, image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" },
-  { name: "MongoDB", icon: <SiMongodb className="text-green-600" />, image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" },
-  { name: "Figma", icon: <FaFigma className="text-pink-500" />, image: "https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" },
+  "MongoDB", "Express.js", "React.js", "Node.js", "Git", "Tailwind CSS", "REST API", "JWT"
 ];
 
-const socialLinks = [
+const projectList = [
   {
-    icon: <FaLinkedin />,
-    url: "https://linkedin.com/in/yourusername",
-    label: "LinkedIn",
+    name: "Portfolio Website",
+    stack: ["React", "Tailwind CSS"],
+    desc: "A personal portfolio to showcase my work and skills. Responsive, fast, and modern.",
+    github: "https://mihirrathodprofile.vercel.app/",
+    demo: "#",
+    img: "https://wiztoonz.com/wp-content/uploads/2022/04/Blog-Post-Portfolio-1170x658.jpg",
+    featured: true,
   },
   {
-    icon: <FaGithub />,
-    url: "https://github.com/yourusername",
-    label: "GitHub",
+    name: "Task List",
+    stack: ["React.js"],
+    desc: "All React state, props, and functionality are implemented here.",
+    github: "https://mihirrathodprofile.vercel.app/tasklist",
+    demo: "/tasklist",
+    img: "https://cloudmatetechnologies.com/wp-content/uploads/2024/06/react.js.png",
+    featured: false,
   },
-  {
-    icon: <FaEnvelope />,
-    url: "mailto:your.email@example.com",
-    label: "Email",
-  },
-];
 
-import bgVideo from "../assets/bg.mp4";
+];
 
 function Master() {
-  const [darkMode, setDarkMode] = useState(true);
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [formStatus, setFormStatus] = useState(null);
-  const [hoveredSkill, setHoveredSkill] = useState(null);
-
-  // Loading state for Start.jsx
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate loading, or you can use actual async logic here
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1800); // 1.8s splash, adjust as needed
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleFormChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    setFormStatus("Sending...");
-    setTimeout(() => {
-      setFormStatus("Thank you! I'll get back to you soon.");
-      setForm({ name: "", email: "", message: "" });
-    }, 1200);
-  };
-
-  const defaultSkillImage = "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80";
-
-  const videoSrc = bgVideo;
-  const fallbackVideoSrc = "https://www.w3schools.com/howto/rain.mp4";
-  const fallbackImageSrc = "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80";
-
-  const videoRef = useRef(null);
-  const [videoError, setVideoError] = useState(false);
-  const [useFallbackVideo, setUseFallbackVideo] = useState(false);
-
-  useEffect(() => {
-    setVideoError(false);
-    setUseFallbackVideo(false);
-  }, [darkMode]);
-
-  const handleVideoError = () => {
-    if (!useFallbackVideo) {
-      setUseFallbackVideo(true);
-    } else {
-      setVideoError(true);
-    }
-  };
-
-  // Show Start.jsx splash until loading is done
-  if (loading) {
-    return <Start />;
-  }
-
+  const milestones = [
+    {
+      year: "2021",
+      title: "Graduated B.Sc. Computer Science",
+      desc: "Completed degree with distinction.",
+    },
+    {
+      year: "2021-2022",
+      title: "Frontend Developer, [Prev Company]",
+      desc: "Built modern UIs with React & Tailwind.",
+    },
+    {
+      year: "2022-2024",
+      title: "Full Stack Developer",
+      desc: "Developed scalable MERN apps for clients.",
+    },
+  ];
+  const socials = [
+    {
+      label: "LinkedIn",
+      url: "https://www.linkedin.com/in/mihir-rathod-563273300/",
+      icon: (
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2" stroke="#1976d2" strokeWidth="2"/><rect x="6" y="9" width="2" height="7" fill="#1976d2"/><rect x="11" y="12" width="2" height="4" fill="#1976d2"/><circle cx="7" cy="7" r="1" fill="#1976d2"/></svg>
+      ),
+    },
+    {
+      label: "GitHub",
+      url: "https://github.com/iammihir95747",
+      icon: (
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#222" strokeWidth="2"/><path d="M9 18c-4-1.5-4-6 0-7" stroke="#222" strokeWidth="1.5"/><path d="M15 18c4-1.5 4-6 0-7" stroke="#222" strokeWidth="1.5"/><circle cx="12" cy="12" r="3" stroke="#222" strokeWidth="1.5"/></svg>
+      ),
+    },
+    {
+      label: "Email",
+      url: "mailto:mihirrathod95747@gmail.com",
+      icon: (
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2" stroke="#1976d2" strokeWidth="2"/><path d="M3 6l9 7 9-7" stroke="#1976d2" strokeWidth="2"/></svg>
+      ),
+    },
+  ];
   return (
     <div
-      className={`font-sans ${darkMode ? "dark" : ""} min-h-screen transition-colors duration-500 relative`}
-      style={{ background: "none" }}
+      className="font-sans bg-white text-gray-900 min-h-screen"
+      style={{
+        fontFamily: "'Poppins', 'Inter', 'Manrope', sans-serif",
+        letterSpacing: "0.04em",
+      }}
     >
-      {/* Global Background Video */}
-      <div className="fixed inset-0 -z-20 w-full h-full overflow-hidden pointer-events-none">
-        {!videoError ? (
-          <video
-            ref={videoRef}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-            style={{
-              opacity: 1,
-              transition: "opacity 0.5s",
-            }}
-            onError={handleVideoError}
-          >
-            <source src={useFallbackVideo ? fallbackVideoSrc : videoSrc} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        ) : (
-          <img
-            src={fallbackImageSrc}
-            alt="Background"
-            className="w-full h-full object-cover"
-            style={{
-              opacity: darkMode ? 0.7 : 0.5,
-              transition: "opacity 0.5s",
-            }}
-          />
-        )}
-      </div>
-
-      {/* Navbar at the very top, no extra space */}
-      <Navbar />
-
-      {/* Theme Toggle */}
-      <button
-        className="fixed top-5 right-5 z-50 rounded-full p-2 bg-black/70 text-white hover:bg-white hover:text-black transition"
-        aria-label="Toggle dark mode"
-        onClick={() => setDarkMode((d) => !d)}
-      >
-        <span className="text-xl">
-          {darkMode ? "🌞" : "🌙"}
-        </span>
-      </button>
-
-      {/* Main Content */}
-      <main className="relative z-10">
-        {/* Hero Section */}
+      <nav className="fixed top-0 left-0 w-full z-50 transition-colors duration-300 bg-white/70 backdrop-blur-sm border-b border-gray-200">
+        <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-3">
+          <span className="font-extralight text-xl tracking-widest uppercase text-gray-900 select-none">MIHIR</span>
+          <ul className="flex gap-7 text-sm font-light uppercase tracking-wider">
+            {["Home", "About", "Skills", "Projects", "Contact"].map((item) => (
+              <li key={item}>
+                <a
+                  href={`#${item.toLowerCase()}`}
+                  className="relative transition-all duration-200 hover:underline underline-offset-8 decoration-2 decoration-blue-600"
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+      <main>
         <section
-          id="hero"
-          className="w-full min-h-screen flex flex-col items-center justify-center text-center px-4 relative"
+          id="home"
+          className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-0 pt-32 pb-20 px-6 relative"
+          style={{
+            fontFamily: "'Poppins', 'Inter', 'Manrope', sans-serif",
+          }}
         >
-          {/* No background video here, it's now global */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="flex flex-col items-center gap-6 w-full max-w-3xl mx-auto  text-white py-12 px-6 rounded-none relative z-10">
-              <img
-                src="https://avatars.githubusercontent.com/u/9919?s=200&v=4"
-                alt="Profile"
-                className="w-32 h-32 rounded-full border-4 border-white object-cover mb-4"
-              />
-              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight font-poppins">
-                Hi, I'm <span className="text-black bg-white px-2 rounded">Mihir Rathod</span>
-              </h1>
-              <h2 className="text-xl md:text-2xl font-semibold text-gray-200 tracking-wide mb-4">
-                Web Developer &amp; Creative Coder
-              </h2>
+          <div className="flex-1 flex flex-col items-start justify-center animate-fadein">
+            <h1 className="text-4xl md:text-5xl font-extrabold uppercase tracking-widest mb-3 text-gray-900">
+              Hi, I’m <span className="text-blue-600">Mihir Rathod</span>
+            </h1>
+            <h2 className="text-xl md:text-2xl font-semibold uppercase tracking-wide mb-4 text-gray-700">
+              MERN Stack Web Developer
+            </h2>
+            <p className="text-gray-600 text-base mb-7 max-w-lg">
+              Building fast, scalable, full-stack web applications using MongoDB, Express, React &amp; Node.js.
+            </p>
+            <div className="flex gap-4">
               <a
                 href="#projects"
-                className="inline-block px-8 py-3 text-black bg-white rounded font-semibold hover:bg-gray-200 transition"
+                className="px-6 py-2 border-2 border-blue-600 text-blue-600 font-semibold uppercase tracking-wide transition-all duration-200 bg-white hover:bg-blue-600 hover:text-white rounded-none shadow-none"
+                style={{ borderRadius: 0 }}
               >
-                View My Work
+                View Projects
               </a>
+              <a
+                href="#contact"
+                className="px-6 py-2 border-2 border-gray-900 text-gray-900 font-semibold uppercase tracking-wide transition-all duration-200 bg-white hover:bg-gray-900 hover:text-white rounded-none shadow-none"
+                style={{ borderRadius: 0 }}
+              >
+                Contact Me
+              </a>
+            </div>
+          </div>
+          <div className="hidden md:flex h-72 w-0.5 mx-10 bg-blue-600 rounded-none" />
+          <div className="flex-1 flex justify-center items-center animate-slidein">
+            <img
+              src={profileImg}
+              alt="Mihir Rathod"
+              className="w-80 h-80 object-cover border-2 border-gray-300 shadow-lg scale-110 transition-transform duration-300"
+              style={{ borderRadius: 0, transition: "box-shadow 0.2s, transform 0.3s" }}
+            />
+          </div>
+          <div
+            className="absolute inset-0 pointer-events-none opacity-10"
+            style={{
+              backgroundImage:
+                "linear-gradient(90deg,rgba(0,0,0,0.04) 1px,transparent 1px),linear-gradient(rgba(0,0,0,0.04) 1px,transparent 1px)",
+              backgroundSize: "32px 32px",
+              zIndex: 0,
+            }}
+          />
+        </section>
+        <section
+          id="about"
+          className="max-w-6xl mx-auto px-6 py-16 border-b border-gray-100 flex flex-col md:flex-row gap-10"
+        >
+          <div className="flex-1 flex flex-col justify-center">
+            <h3 className="text-xl font-bold uppercase tracking-widest text-blue-600 mb-4">About Me</h3>
+            <div className="text-gray-800 text-base mb-6">
+              <p>
+                I’m a passionate MERN Stack developer with 3+ years of experience building fast, scalable web applications. I thrive in collaborative teams and love turning ideas into reality with clean, efficient code.
+              </p>
+            </div>
+            <div className="relative pl-6">
+              {milestones.map((m, i) => (
+                <div key={m.title} className="flex items-start mb-8 last:mb-0">
+                  <div className="absolute left-0 top-0 h-full w-0.5 bg-gray-200" style={{ zIndex: 0 }} />
+                  <div className="relative z-10">
+                    <div
+                      className="w-3 h-3 bg-blue-600 border-2 border-white rounded-none"
+                      style={{
+                        borderRadius: 0,
+                        marginLeft: "-1.1rem",
+                        marginTop: "0.25rem",
+                      }}
+                    />
+                  </div>
+                  <div className="ml-4">
+                    <div className="font-semibold text-gray-900">{m.title}</div>
+                    <div className="text-xs text-gray-500 mb-1">{m.year}</div>
+                    <div className="text-gray-700 text-sm">{m.desc}</div>
+                    {i < milestones.length - 1 && (
+                      <div className="border-b border-gray-200 my-3" />
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex-1 flex items-center justify-center">
+            <img
+              src={profileImg}
+              alt="About Mihir"
+              className="w-56 h-64 object-cover border-2 border-gray-200 shadow-md"
+              style={{ borderRadius: 0 }}
+            />
+          </div>
+        </section>
+        <section
+          id="skills"
+          className="max-w-6xl w-full mx-auto px-6 py-16 border-b border-gray-100"
+        >
+          <h3 className="text-xl font-bold uppercase tracking-widest text-blue-600 mb-8">Skills</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-7">
+            {skills.map((skill) => (
+              <div
+                key={skill}
+                className="group flex flex-col items-center justify-center px-4 py-6 border border-gray-200 bg-white transition-all duration-200 cursor-pointer hover:border-blue-600"
+                style={{ borderRadius: 0 }}
+              >
+                <div className="mb-3">{skillIcons[skill]}</div>
+                <span className="text-gray-900 font-medium uppercase tracking-wide text-sm group-hover:underline group-hover:decoration-blue-600 group-hover:underline-offset-4 transition-all duration-150">
+                  {skill}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+        <section
+          id="projects"
+          className="max-w-6xl mx-auto px-6 py-16 border-b border-gray-100"
+        >
+          <h3 className="text-xl font-bold uppercase tracking-widest text-blue-600 mb-8">Projects</h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            {projectList.map((proj) => (
+              <div
+                key={proj.name}
+                className={`relative flex flex-col bg-white border border-gray-200 transition-all duration-200 hover:scale-[1.025] hover:shadow-xl group`}
+                style={{ borderRadius: 0 }}
+              >
+                {proj.featured && (
+                  <div className="absolute left-0 top-0 h-8 w-1 bg-blue-600" />
+                )}
+                <img
+                  src={proj.img}
+                  alt={proj.name}
+                  className="w-full h-40 object-cover border-b border-gray-200"
+                  style={{ borderRadius: 0 }}
+                />
+                <div className="flex-1 flex flex-col p-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h4 className="font-semibold text-gray-900 text-lg">{proj.name}</h4>
+                    {proj.featured && (
+                      <span className="ml-2 px-2 py-0.5 text-xs uppercase font-bold text-blue-600 border border-blue-600 rounded-none">Featured</span>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {proj.stack.map((s) => (
+                      <span key={s} className="text-xs text-gray-500 uppercase tracking-wide">{s}</span>
+                    ))}
+                  </div>
+                  <p className="text-gray-700 text-sm mb-4 line-clamp-2">{proj.desc}</p>
+                  <div className="flex gap-3 mt-auto">
+                    {proj.demo !== "#" && (
+                      <a
+                        href={proj.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-1.5 border-2 border-blue-600 text-blue-600 font-semibold uppercase tracking-wide transition-all duration-200 bg-white hover:bg-blue-600 hover:text-white rounded-none"
+                        style={{ borderRadius: 0 }}
+                      >
+                        Live Demo
+                      </a>
+                    )}
+                    <a
+                      href={proj.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-1.5 border-2 border-gray-900 text-gray-900 font-semibold uppercase tracking-wide transition-all duration-200 bg-white hover:bg-gray-900 hover:text-white rounded-none"
+                      style={{ borderRadius: 0 }}
+                    >
+                    View
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+        <section
+          id="contact"
+          className="max-w-6xl mx-auto px-6 py-16"
+        >
+          <h3 className="text-xl font-bold uppercase tracking-widest text-blue-600 mb-8 text-center">Contact</h3>
+          <div className="flex flex-col md:flex-row gap-12 justify-center items-start">
+            <form
+              className="flex-1 max-w-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-8 border border-gray-200 shadow-sm"
+              style={{ borderRadius: 0 }}
+            >
+              <div className="col-span-1 md:col-span-2">
+                <label htmlFor="name" className="block text-gray-800 mb-1 font-medium uppercase tracking-wide text-xs">Name</label>
+                <input
+                  id="name"
+                  type="text"
+                  className="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:border-blue-600 transition rounded-none"
+                  required
+                  style={{ borderRadius: 0 }}
+                />
+              </div>
+              <div className="col-span-1">
+                <label htmlFor="email" className="block text-gray-800 mb-1 font-medium uppercase tracking-wide text-xs">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  className="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:border-blue-600 transition rounded-none"
+                  required
+                  style={{ borderRadius: 0 }}
+                />
+              </div>
+              <div className="col-span-1">
+                <label htmlFor="message" className="block text-gray-800 mb-1 font-medium uppercase tracking-wide text-xs">Message</label>
+                <textarea
+                  id="message"
+                  rows={4}
+                  className="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:border-blue-600 transition rounded-none"
+                  required
+                  style={{ borderRadius: 0 }}
+                />
+              </div>
+              <div className="col-span-1 md:col-span-2 flex justify-end">
+                <button
+                  type="submit"
+                  className="px-8 py-2 border-2 border-blue-600 text-blue-600 font-semibold uppercase tracking-wide transition-all duration-200 bg-white hover:bg-blue-600 hover:text-white rounded-none"
+                  style={{ borderRadius: 0 }}
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+            <div className="flex-1 flex flex-col items-center gap-6">
               <div className="flex gap-4 mt-4">
-                {socialLinks.map((s) => (
+                {socials.map((s) => (
                   <a
                     key={s.label}
                     href={s.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="w-12 h-12 flex items-center justify-center border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 rounded-none"
+                    style={{ borderRadius: 0 }}
                     aria-label={s.label}
-                    className="text-2xl text-white hover:text-black hover:bg-white rounded-full p-2 transition"
                   >
                     {s.icon}
                   </a>
                 ))}
               </div>
             </div>
-          </motion.div>
-        </section>
-
-        {/* About Section */}
-        <section
-          id="about"
-          className="w-screen py-20 px-0 flex flex-col items-center"
-          style={{ position: "relative", left: "50%", right: "50%", marginLeft: "-50vw", marginRight: "-50vw" }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="w-full bg-white text-black py-12 px-6 rounded-none flex flex-col items-center"
-          >
-            <div className="w-full max-w-3xl mx-auto">
-              <h3 className="text-3xl font-bold mb-6 font-poppins text-black">
-                About Me
-              </h3>
-              <p className="text-lg mb-6 leading-relaxed">
-                I'm a passionate web developer with a love for building beautiful, functional, and accessible web experiences. My journey started with curiosity and a knack for problem-solving, and now I thrive on turning ideas into reality with code. I enjoy collaborating, learning new technologies, and bringing creativity into every project. When I'm not coding, you might find me sketching, exploring new music, or hiking. My goal is to contribute to impactful projects and grow as a developer every day.
-              </p>
-              <div className="flex flex-wrap gap-6 justify-center mt-4">
-                <div className="flex flex-col items-center">
-                  <FaReact className="text-3xl text-cyan-400 mb-1" />
-                  <span className="text-xs text-gray-600">React Lover</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <FaFigma className="text-3xl text-pink-400 mb-1" />
-                  <span className="text-xs text-gray-600">Design Enthusiast</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <FaNodeJs className="text-3xl text-green-500 mb-1" />
-                  <span className="text-xs text-gray-600">Backend Curious</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <FaJs className="text-3xl text-yellow-400 mb-1" />
-                  <span className="text-xs text-gray-600">JS Fan</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        <div
-          className="w-full bg-black text-white py-6 text-center text-4xl tracking-wide font-extrabold"
-          style={{
-            letterSpacing: "0.08em",
-            fontFamily: "'Pacifico', 'Dancing Script', 'Poppins', 'Space Grotesk', sans-serif",
-            textShadow: "0 2px 16px rgba(0,255,255,0.12), 0 1px 0 #fff"
-          }}
-        >
-          Minimalistic Design • Clean • Inspired by Simplicity 
-        </div>
-        {/* Projects Section */}
-        <section
-          id="projects"
-          className="w-screen py-20 px-0 flex flex-col items-center"
-          style={{ position: "relative", left: "50%", right: "50%", marginLeft: "-50vw", marginRight: "-50vw" }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="w-full bg-white text-black py-12 px-6 rounded-none flex flex-col items-center"
-          >
-            <div className="w-full max-w-3xl mx-auto">
-              <h3 className="text-3xl font-bold mb-6 font-poppins text-black text-center">
-                Projects
-              </h3>
-              <p className="text-lg mb-6 leading-relaxed text-center">
-                Here are some of the projects I've worked on, each reflecting my passion for building useful and engaging web applications. I'm always eager to learn and take on new challenges!
-              </p>
-              <div className="flex flex-wrap gap-6 justify-center mt-4">
-                {projects.map((project, idx) => (
-                  <div key={project.title} className="flex flex-col items-center bg-white rounded-lg shadow-sm p-4 min-w-[180px] max-w-[220px]">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className={`w-20 h-20 object-cover rounded-lg mb-2 border border-black/10 ${project.title === "Coming Soon" ? "opacity-60" : ""}`}
-                    />
-                    <span className="text-base font-semibold text-black">{project.title}</span>
-                    <span className="text-xs text-gray-600 mb-2 text-center">{project.description}</span>
-                    {project.github && project.github !== "#" ? (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-2 px-4 py-1 bg-blue-600 text-white rounded-full text-sm font-semibold hover:bg-blue-700 transition"
-                      >
-                        View
-                      </a>
-                    ) : (
-                      <span className="mt-2 px-4 py-1 bg-gray-300 text-gray-600 rounded-full text-sm font-semibold cursor-not-allowed">
-                        Coming Soon
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Contact Section */}
-        <section
-          id="contact"
-          className="w-full py-10 px-2 sm:px-4"
-        >
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: { opacity: 0, y: 40 },
-              visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.1, duration: 0.5, ease: "easeOut" } }
-            }}
-            className="w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto bg-black/95 text-white py-8 px-3 sm:px-6 rounded-xl shadow-xl flex flex-col items-center"
-          >
-            <motion.h3
-              className="text-2xl sm:text-3xl font-extrabold mb-1 font-poppins text-center tracking-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.5 }}
-            >
-              <span className="bg-gradient-to-r from-white/80 via-white to-white/60 bg-clip-text text-transparent">
-                Let's Connect
-              </span>
-            </motion.h3>
-            <motion.p
-              className="text-gray-400 mb-6 text-center max-w-xs text-sm font-light"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15, duration: 0.5 }}
-            >
-              Have a project in mind or just want to say hi? Drop me a message below.
-            </motion.p>
-            <form
-              className="w-full flex flex-col gap-4"
-              onSubmit={handleFormSubmit}
-              autoComplete="off"
-            >
-              <motion.div
-                className="relative"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.18, duration: 0.4, type: "spring" }}
-              >
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  className="w-full bg-black/80 border border-white/10 rounded-md text-white placeholder-gray-400 py-2 px-3 focus:outline-none focus:border-cyan-400 transition-all font-poppins text-base shadow"
-                  value={form.name}
-                  onChange={handleFormChange}
-                  required
-                />
-              </motion.div>
-              <motion.div
-                className="relative"
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.22, duration: 0.4, type: "spring" }}
-              >
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  className="w-full bg-black/80 border border-white/10 rounded-md text-white placeholder-gray-400 py-2 px-3 focus:outline-none focus:border-cyan-400 transition-all font-poppins text-base shadow"
-                  value={form.email}
-                  onChange={handleFormChange}
-                  required
-                />
-              </motion.div>
-              <motion.div
-                className="relative"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.26, duration: 0.4, type: "spring" }}
-              >
-                <textarea
-                  name="message"
-                  placeholder="Message"
-                  rows={2}
-                  className="w-full bg-black/80 border border-white/10 rounded-md text-white placeholder-gray-400 py-2 px-3 focus:outline-none focus:border-cyan-400 transition-all font-poppins text-base resize-none shadow"
-                  value={form.message}
-                  onChange={handleFormChange}
-                  required
-                />
-              </motion.div>
-              <motion.button
-                type="submit"
-                className="mt-1 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 text-white font-bold py-2 rounded-full shadow hover:from-purple-500 hover:to-cyan-400 hover:scale-105 transition-all duration-200 text-base tracking-wide disabled:opacity-60 border-0 outline-none focus:ring-2 focus:ring-cyan-400"
-                disabled={formStatus === "Sending..."}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3, duration: 0.4, type: "spring" }}
-              >
-                {formStatus === "Sending..." ? (
-                  <span className="animate-pulse">Sending...</span>
-                ) : (
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 2L11 13" /><path d="M22 2L15 22L11 13L2 9L22 2Z" /></svg>
-                    Send
-                  </span>
-                )}
-              </motion.button>
-              {formStatus && (
-                <motion.div
-                  className="text-green-400 text-center text-xs mt-1 font-poppins"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {formStatus}
-                </motion.div>
-              )}
-            </form>
-            <motion.div
-              className="flex justify-center gap-4 mt-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.5 }}
-            >
-              {socialLinks.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="text-xl text-white/80 hover:text-cyan-400 hover:bg-white/10 rounded-full p-2 transition-all duration-200 border border-white/10 hover:scale-110"
-                  style={{ boxShadow: "0 2px 8px 0 rgba(0,255,255,0.08)" }}
-                >
-                  {s.icon}
-                </a>
-              ))}
-            </motion.div>
-          </motion.div>
+          </div>
         </section>
       </main>
-
-      {/* Footer */}
-      <footer className="text-center py-6 text-white bg-black w-full text-sm">
-        &copy; {new Date().getFullYear()} Your Name. All rights reserved.
+      <footer className="max-w-6xl mx-auto px-6 py-8 text-center text-xs text-gray-400 border-t border-gray-100 mt-8 tracking-widest uppercase">
+        &copy; {new Date().getFullYear()} Mihir Rathod. All rights reserved.
       </footer>
-
-      <style>{`
-        .font-poppins {
-          font-family: 'Poppins', 'Inter', 'Space Grotesk', sans-serif;
-        }
-      `}</style>
     </div>
   );
 }
