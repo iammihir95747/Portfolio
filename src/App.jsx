@@ -5,6 +5,7 @@ import Resume from './Components/Resume';
 import Projects from './Components/Projects';
 import Todo from './Projects/Todo';
 import Footer from './Components/Footer';
+import { Analytics } from "@vercel/analytics/next"
 import TaskList from './Projects/TaskList';
 
 function App() {
