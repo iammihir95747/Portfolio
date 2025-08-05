@@ -230,6 +230,34 @@ function Master() {
           </div>
         </section>
         <section
+          id="resume"
+          className="max-w-6xl mx-auto px-6 py-16 border-b border-gray-100"
+        >
+          <h3 className="text-xl font-bold uppercase tracking-widest text-blue-600 mb-8">Resume</h3>
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="flex-1">
+              <p className="text-gray-800 text-base mb-6">
+                Download my latest resume to learn more about my experience, education, and skills in detail.
+              </p>
+              <a
+                href="/resume"
+                className="inline-block px-8 py-3 border-2 border-blue-600 text-blue-600 font-semibold uppercase tracking-wide transition-all duration-200 bg-white hover:bg-blue-600 hover:text-white rounded-none"
+                style={{ borderRadius: 0 }}
+              >
+                View Resume
+              </a>
+            </div>
+            <div className="flex-1 flex items-center justify-center">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                alt="Resume Icon"
+                className="w-40 h-40 object-contain"
+                style={{ borderRadius: 0 }}
+              />
+            </div>
+          </div>
+        </section>
+        <section
           id="skills"
           className="max-w-6xl w-full mx-auto px-6 py-16 border-b border-gray-100"
         >
@@ -379,6 +407,8 @@ function Master() {
             </div>
           </div>
         </section>
+       
+
       </main>
       <footer className="max-w-6xl mx-auto px-6 py-8 text-center text-xs text-gray-400 border-t border-gray-100 mt-8 tracking-widest uppercase">
         &copy; {new Date().getFullYear()} Mihir Rathod. All rights reserved.
