@@ -1,5 +1,6 @@
 import React from 'react';
 import Img from "../assets/mypic.png"
+import { img } from 'framer-motion/client';
 
 const ACCENT1 = "text-blue-600";
 const ACCENT2 = "text-gray-900";
@@ -66,19 +67,24 @@ const projectList = [
 function Master() {
   const milestones = [
     {
+      year: "2026",
+      title: "Master of Computer Applications (MCA)",
+      desc: "Gujarat University Ongoing",
+    },
+    {
+      year: "2024",
+      title: "Bachelor of Computer Applications (BCA)",
+      desc: "Gujarat University 7.33 CGPA ",
+    },
+    {
       year: "2021",
-      title: "Graduated B.Sc. Computer Science",
-      desc: "Completed degree with distinction.",
+      title: "Higher Secondary Certificate (HSC)",
+      desc: "GSEB 58.42%",
     },
     {
-      year: "2021-2022",
-      title: "Frontend Developer, [Prev Company]",
-      desc: "Built modern UIs with React & Tailwind.",
-    },
-    {
-      year: "2022-2024",
-      title: "Full Stack Developer",
-      desc: "Developed scalable MERN apps for clients.",
+      year: "2019 ",
+      title: "Secondary School Certificate (SSC)",
+      desc: "GSEB 68.66%",
     },
   ];
   const socials = [
@@ -249,7 +255,7 @@ function Master() {
             </div>
             <div className="flex-1 flex items-center justify-center">
               <img
-                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                src="https://thumbs.dreamstime.com/b/businessman-profile-icon-male-portrait-flat-design-vector-illustration-47075259.jpg"
                 alt="Resume Icon"
                 className="w-40 h-40 object-contain"
                 style={{ borderRadius: 0 }}
@@ -342,7 +348,7 @@ function Master() {
           id="contact"
           className="max-w-6xl mx-auto px-6 py-16"
         >
-          <h3 className="text-xl font-bold uppercase tracking-widest text-blue-600 mb-8 text-center">Contact</h3>
+          <h3 className="text-xl font-bold uppercase bg-black p-4 tracking-widest text-white rounded mb-8 text-center">Contact</h3>
           <div className="flex flex-col md:flex-row gap-12 justify-center items-start">
             <form
               className="flex-1 max-w-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-8 border border-gray-200 shadow-sm"
@@ -372,7 +378,7 @@ function Master() {
                 <label htmlFor="message" className="block text-gray-800 mb-1 font-medium uppercase tracking-wide text-xs">Message</label>
                 <textarea
                   id="message"
-                  rows={4}
+                  rows={1}
                   className="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:border-blue-600 transition rounded-none"
                   required
                   style={{ borderRadius: 0 }}
