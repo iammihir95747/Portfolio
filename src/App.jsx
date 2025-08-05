@@ -5,7 +5,6 @@ import Resume from './Components/Resume';
 import Projects from './Components/Projects';
 import Todo from './Projects/Todo';
 import Footer from './Components/Footer';
-import TaskList from './Projects/TaskList';
 
 function App() {
   return (
@@ -16,7 +15,6 @@ function App() {
           <Route path='/resume' element={<Resume />} />
           <Route path='/projects' element={<Projects />} />
           <Route path='/todo' element={<Todo />} />
-          <Route path='/tasklist' element={<TaskList />} />
          </Routes>
          </BrowserRouter>
            <Footer />

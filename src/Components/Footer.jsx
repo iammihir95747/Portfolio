@@ -16,16 +16,11 @@ const socialLinks = [
   },
   {
     icon: <FaEnvelope />,
-    url: "mihirrathod95747@gmail.com",
+    url: "mailto:mihirrathod95747@gmail.com",
     label: "Email",
     isEmail: true,
   },
 ];
-
-function openGmailCompose(email) {
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
-  window.open(gmailUrl, "_blank", "noopener,noreferrer");
-}
 
 const navLinks = [
   { href: "/resume", label: "Resume" },
@@ -34,46 +29,40 @@ const navLinks = [
 ];
 
 const Footer = () => (
-  <footer className="w-full bg-black text-white py-4 text-center text-xs">
-    <ul className="flex justify-center gap-4 mb-2 list-none p-0">
-      {socialLinks.map((s) =>
-        <li key={s.label}>
-          {s.isEmail ? (
-            <button
-              onClick={() => openGmailCompose(s.url)}
-              aria-label={s.label}
-              className="bg-transparent border-none cursor-pointer text-lg text-white hover:text-cyan-400 p-0"
-              style={{ padding: 0, background: "none", border: "none" }}
-            >
-              {s.icon}
-            </button>
-          ) : (
-            <a
-              href={s.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={s.label}
-              className="text-lg text-white hover:text-cyan-400"
-            >
-              {s.icon}
-            </a>
-          )}
-        </li>
-      )}
-    </ul>
-    <ul className="flex justify-center gap-4 mb-2 list-none p-0">
-      {navLinks.map(link => (
-        <li key={link.href}>
+  <footer className="w-full bg-black text-white py-6 text-center text-xs border-t border-gray-800 mt-8 tracking-widest uppercase">
+    <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4">
+      <div className="flex gap-4 mb-2 md:mb-0">
+        {socialLinks.map((s) =>
           <a
+            key={s.label}
+            href={s.url}
+            target={s.isEmail ? undefined : "_blank"}
+            rel={s.isEmail ? undefined : "noopener noreferrer"}
+            aria-label={s.label}
+            className="text-lg text-white hover:text-blue-400 transition-colors"
+          >
+            {s.icon}
+          </a>
+        )}
+      </div>
+      <div className="flex gap-6 mb-2 md:mb-0">
+        {navLinks.map(link => (
+          <a
+            key={link.href}
             href={link.href}
-            className="hover:underline text-white"
+            className="hover:underline text-white transition-colors"
           >
             {link.label}
           </a>
-        </li>
-      ))}
-    </ul>
-    
+        ))}
+      </div>
+      <div className="flex gap-6 mb-2 md:mb-0">
+        <p>Email : mihirrathod95747@gmail.com</p>
+      <span>
+        <p>Contact : +91 9574713004</p>
+      </span>
+      </div>
+    </div>
   </footer>
 );
 
