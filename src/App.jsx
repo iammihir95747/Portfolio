@@ -17,7 +17,6 @@ function App() {
           <Route path='/projects' element={<Projects />} />
           <Route path='/todo' element={<Todo />} />
           <Route path='/tasklist' element={<TaskList />} />
-
          </Routes>
          </BrowserRouter>
            <Footer />
