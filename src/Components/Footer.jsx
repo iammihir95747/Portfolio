@@ -29,7 +29,7 @@ const navLinks = [
 ];
 
 const Footer = () => (
-  <footer className="w-full bg-black text-white py-6 text-center text-xs border-t border-gray-800 mt-8 tracking-widest uppercase">
+  <footer className="w-full bg-black text-white py-10 text-center text-xs border-t border-gray-800  tracking-widest uppercase">
     <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4">
       <div className="flex gap-4 mb-2 md:mb-0">
         {socialLinks.map((s) =>

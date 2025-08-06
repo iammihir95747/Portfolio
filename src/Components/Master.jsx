@@ -1,21 +1,14 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Img from "../assets/mypic.png";
 import project2 from "../assets/project2.png";
-import ResumePDF from "../assets/resume.pdf"; // Import your resume PDF
+import ResumePDF from "../assets/resume.pdf";
+import Navbar from "./Navbar";
 
 // Font: Inter (geometric sans-serif)
 const FONT = "font-inter";
 
 // --- Data ---
-
-const NAV_LINKS = [
-  { name: "Work", href: "#work" },
-  { name: "About", href: "#about" },
-  { name: "Play", href: "#play" },
-  { name: "Resume", href: "#resume" }, // Resume section
-  { name: "Contact", href: "#contact" }, // Contact section
-];
 
 const SOCIALS = [
   {
@@ -201,106 +194,27 @@ const hoverLift = {
   whileTap: { scale: 0.98 },
 };
 
-// --- Components ---
-
-function Navbar({ dark, setDark }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-md ${FONT}`}
-      style={{ fontFamily: "Inter, Satoshi, sans-serif", height: "48px" }}
-    >
-      <div className="max-w-6xl mx-auto flex items-center justify-between px-6" style={{ height: "48px" }}>
-        <a
-          href="/"
-          className="text-xl font-bold tracking-tight text-gray-900 dark:text-white flex items-center h-full"
-          style={{ height: "48px" }}
-        >
-          <span className="inline-block align-middle">Mihir Rathod</span>
-        </a>
-        <ul className="hidden md:flex gap-7 h-full items-center">
-          {NAV_LINKS.filter(link => link.name !== "Play").map((link) => (
-            <li key={link.name} className="h-full flex items-center">
-              {link.name === "Resume" ? (
-                <a
-                  href="#resume"
-                  className="relative text-base text-gray-700 dark:text-gray-200 font-semibold px-1 py-1 transition-colors duration-200
-                    after:content-[''] after:block after:h-0.5 after:bg-gradient-to-r after:from-green-400 after:to-yellow-200 after:rounded-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left flex items-center h-full"
-                  style={{
-                    fontFamily: "Inter, Satoshi, sans-serif",
-                    letterSpacing: "0.01em",
-                    height: "48px",
-                  }}
-                >
-                  {link.name}
-                </a>
-              ) : (
-                <a
-                  href={link.href}
-                  className="relative text-base text-gray-700 dark:text-gray-200 font-semibold px-1 py-1 transition-colors duration-200
-                    after:content-[''] after:block after:h-0.5 after:bg-gradient-to-r after:from-green-400 after:to-yellow-200 after:rounded-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left flex items-center h-full"
-                  style={{
-                    fontFamily: "Inter, Satoshi, sans-serif",
-                    letterSpacing: "0.01em",
-                    height: "48px",
-                  }}
-                >
-                  {link.name}
-                </a>
-              )}
-            </li>
-          ))}
-        </ul>
-        {/* Removed Play button and reduced nav height */}
-      </div>
-      {/* Mobile Nav */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -24 }}
-            className="fixed inset-0 z-50 bg-white/90 dark:bg-gray-900/95 backdrop-blur-md flex flex-col items-center justify-center md:hidden"
-          >
-            <button
-              className="absolute top-4 right-4 text-2xl"
-              onClick={() => setOpen(false)}
-              aria-label="Close navigation"
-            >
-              ×
-            </button>
-            <ul className="flex flex-col gap-7 text-xl">
-              {NAV_LINKS.filter(link => link.name !== "Play").map((link) => (
-                <li key={link.name}>
-                  {link.name === "Resume" ? (
-                    <a
-                      href="#resume"
-                      className="text-gray-900 dark:text-white font-semibold"
-                      onClick={() => setOpen(false)}
-                    >
-                      {link.name}
-                    </a>
-                  ) : (
-                    <a
-                      href={link.href}
-                      className="text-gray-900 dark:text-white font-semibold"
-                      onClick={() => setOpen(false)}
-                    >
-                      {link.name}
-                    </a>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
-  );
+// --- Scroll Helper for Section Navigation ---
+function scrollToSectionId(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
+// --- Components ---
+
 function Hero() {
+  // Only allow smooth scroll for working sections: home and resume
+  const handleNavClick = (e, sectionId) => {
+    // Only "home" and "resume" are working, others just scroll to their section by id (no smooth scroll)
+    if (sectionId === "#home" || sectionId === "#resume") {
+      e.preventDefault();
+      scrollToSectionId(sectionId.replace("#", ""));
+    }
+    // For other sections, let default anchor behavior (jump to id)
+  };
+
   return (
     <section
       id="home"
@@ -365,6 +279,7 @@ function Hero() {
         <a
           href="#resume"
           className="px-5 py-2 rounded-md border border-green-300 bg-transparent text-green-700 font-medium flex items-center gap-2 hover:bg-green-50 transition-colors duration-150"
+          onClick={e => handleNavClick(e, "#resume")}
         >
           <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
             <rect x="4" y="4" width="16" height="16" rx="3" stroke="#1976d2" strokeWidth="2" />
@@ -666,52 +581,28 @@ function About() {
   );
 }
 
-function Footer({ dark, setDark }) {
-  return (
-    <footer className="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-gray-400 text-sm">
-      <div className="flex-1 text-left">
-        &copy; {new Date().getFullYear()} Mihir Rathod
-      </div>
-      <div className="flex-1 flex justify-center">
-        <button
-          aria-label="Toggle dark mode"
-          className="relative w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-green-100 to-yellow-50 border border-gray-200 dark:border-gray-700 shadow-sm transition-all duration-200"
-          onClick={() => setDark((d) => !d)}
-        >
-          <motion.div
-            animate={{ rotate: dark ? 180 : 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="text-xl"
-          >
-            {dark ? "🌙" : "☀️"}
-          </motion.div>
-        </button>
-      </div>
-      <div className="flex-1 flex justify-end gap-3">
-        {SOCIALS.map((s) => (
-          <a
-            key={s.name}
-            href={s.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 text-gray-700 dark:text-gray-200 hover:bg-gradient-to-br hover:from-green-100 hover:to-yellow-50 hover:text-green-700 transition-all duration-200"
-            aria-label={s.name}
-            download={s.name === "CV" ? true : undefined}
-          >
-            {s.icon}
-          </a>
-        ))}
-      </div>
-    </footer>
-  );
-}
 
-// --- Main Page ---
 
 function Master() {
   const [dark, setDark] = useState(false);
 
-  React.useEffect(() => {
+  // Only smooth scroll for working sections: home and resume
+  useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash) {
+        const id = window.location.hash.replace("#", "");
+        // Only smooth scroll for home and resume, else default jump
+        if (id === "home" || id === "resume") {
+          setTimeout(() => scrollToSectionId(id), 0);
+        }
+      }
+    };
+    handleHash();
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+  }, []);
+
+  useEffect(() => {
     if (dark) {
       document.documentElement.classList.add("dark");
       document.body.style.background = "#18181b";
@@ -729,14 +620,14 @@ function Master() {
         letterSpacing: "0.01em",
       }}
     >
-      <Navbar dark={dark} setDark={setDark} />
+      <Navbar />
       <main>
         <Hero />
         <Work />
         <About />
         {/* ResumeSection is now included inside About after education, so not needed here */}
       </main>
-      <Footer dark={dark} setDark={setDark} />
+  
     </div>
   );
 }
