@@ -571,10 +571,10 @@ function Master() {
 
   useEffect(() => {
     if (dark) {
-      document.documentElement.classList.add("dark");
+      document.documentElement.classList.add("white");
       document.body.style.background = "#18181b";
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove("white");
       document.body.style.background = "#f7f6f2";
     }
   }, [dark]);
