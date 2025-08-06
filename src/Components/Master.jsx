@@ -543,28 +543,7 @@ function About() {
           </div>
         </div>
       </motion.div>
-      {/* Gallery */}
-      <motion.div
-        className="mt-16"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeIn}
-      >
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Gallery</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {GALLERY.map((src, i) => (
-            <motion.img
-              key={src}
-              src={src}
-              alt={`Gallery ${i + 1}`}
-              className="w-full h-32 sm:h-40 object-cover rounded-3xl shadow-md"
-              whileHover={{ scale: 1.04 }}
-              transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            />
-          ))}
-        </div>
-      </motion.div>
+  
     </section>
   );
 }

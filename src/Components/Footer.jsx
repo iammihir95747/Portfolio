@@ -26,14 +26,14 @@ const socialLinks = [
 const navLinks = [
   { href: "#resume", label: "Resume" },
   { href: "#work", label: "Projects" },
- 
 ];
 
 const Footer = () => (
-  <footer className="w-full bg-black text-white py-10 text-center text-xs border-t border-gray-800  tracking-widest uppercase">
-    <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4">
-      <div className="flex gap-4 mb-2 md:mb-0">
-        {socialLinks.map((s) =>
+  <footer className="w-full bg-black text-white py-8 text-xs border-t border-gray-800 tracking-widest uppercase">
+    <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-between gap-6 px-4">
+      {/* Social Links */}
+      <div className="flex gap-4 mb-2 md:mb-0 order-1">
+        {socialLinks.map((s) => (
           <a
             key={s.label}
             href={s.url}
@@ -44,10 +44,11 @@ const Footer = () => (
           >
             {s.icon}
           </a>
-        )}
+        ))}
       </div>
-      <div className="flex gap-6 mb-2 md:mb-0">
-        {navLinks.map(link => (
+      {/* Navigation Links */}
+      <div className="flex gap-6 mb-2 md:mb-0 order-3 md:order-2">
+        {navLinks.map((link) => (
           <a
             key={link.href}
             href={link.href}
@@ -57,11 +58,10 @@ const Footer = () => (
           </a>
         ))}
       </div>
-      <div className="flex gap-6 mb-2 md:mb-0">
-        <p>Email : mihirrathod95747@gmail.com</p>
-      <span>
-        <p>Contact : +91 9574713004</p>
-      </span>
+      {/* Contact Info */}
+      <div className="flex flex-col items-center md:items-end gap-1 order-2 md:order-3">
+        <p className="break-all">Email: mihirrathod95747@gmail.com</p>
+        <p>Contact: +91 9574713004</p>
       </div>
     </div>
   </footer>
