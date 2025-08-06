@@ -22,10 +22,11 @@ const socialLinks = [
   },
 ];
 
+// Use #section links for same-page navigation
 const navLinks = [
-  { href: "/resume", label: "Resume" },
-  { href: "/projects", label: "Projects" },
-  { href: "/todo", label: "Todo App" },
+  { href: "#resume", label: "Resume" },
+  { href: "#work", label: "Projects" },
+ 
 ];
 
 const Footer = () => (

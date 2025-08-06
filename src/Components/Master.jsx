@@ -5,10 +5,9 @@ import project2 from "../assets/project2.png";
 import ResumePDF from "../assets/resume.pdf";
 import Navbar from "./Navbar";
 
-// Font: Inter (geometric sans-serif)
+
 const FONT = "font-inter";
 
-// --- Data ---
 
 const SOCIALS = [
   {
@@ -314,7 +313,7 @@ function Work() {
             href={proj.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`group block rounded-[40px] overflow-hidden shadow-lg bg-gradient-to-br ${proj.color} transition-all duration-200`}
+            className={`group block text-black rounded-[40px] overflow-hidden shadow-lg bg-gradient-to-br ${proj.color} transition-all duration-200`}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -331,7 +330,7 @@ function Work() {
               />
               <div className="p-7 flex-1 flex flex-col">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{proj.name}</h3>
-                <p className="text-gray-700 dark:text-gray-200 mb-4">{proj.desc}</p>
+                <p className="text-black  mb-4">{proj.desc}</p>
                 <div className="flex flex-wrap gap-2 mt-auto">
                   {proj.stack.map((s) => (
                     <span
@@ -347,7 +346,7 @@ function Work() {
           </motion.a>
         ))}
       </div>
-      {/* In Progress Section */}
+     
       <motion.div
         className="mt-20 flex flex-col items-center"
         initial="hidden"
@@ -385,6 +384,7 @@ function ResumeSection() {
       </motion.h2>
       <img
         src={Img}
+
         alt="Mihir Rathod"
         className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg mb-6"
       />
@@ -422,14 +422,7 @@ function ResumeSection() {
           Preview Resume
         </a>
       </div>
-      <div className="w-full max-w-2xl aspect-[1/1.414] bg-gray-100 dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-        <iframe
-          src={ResumePDF}
-          title="Resume Preview"
-          className="w-full h-full"
-          style={{ minHeight: 500, border: "none" }}
-        />
-      </div>
+     
       {/* Resume Details */}
       <div className="w-full mt-10">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Summary</h3>
@@ -489,12 +482,7 @@ function About() {
         variants={fadeIn}
       >
         <div className="flex-shrink-0 flex flex-col items-center">
-          <img
-            src={Img}
-            alt="Mihir Rathod"
-            className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-4 border-white shadow-lg mb-6"
-          />
-          <div className="text-center text-gray-500 text-xs">Mihir Rathod</div>
+       
         </div>
         <div className="flex-1">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">

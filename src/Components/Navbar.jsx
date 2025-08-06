@@ -12,7 +12,7 @@ const NAV_LINKS = [
 const SOCIALS = [
   {
     name: "GitHub",
-    href: "https://github.com/",
+    href: "https://github.com/iammihir95747/iammihir95747",
     icon: (
       <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
         <path
@@ -24,7 +24,7 @@ const SOCIALS = [
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/",
+    href: "https://www.linkedin.com/in/mihir-rathod-563273300/",
     icon: (
       <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
         <path
